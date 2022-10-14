@@ -4,20 +4,20 @@
 # $2 mate2
 # $3 output
 
-bbmapdir=~/workspace/
+bbmapdir=/calab_data/mirarab/home/smirarab/workspace
+export TMPDIR=.
 
-mate_1=`mktemp -t "XXXXXX.fq"`
-mate_2=`mktemp -t "XXXXXX.fq"`
+mate_1=$1 #`mktemp -t "XXXXXX.fq"`
+mate_2=$2 #`mktemp -t "XXXXXX.fq"`
 
 
-cat $1 > ${mate_1}
-cat $2 > ${mate_2}
+#cat $1 > ${mate_1}
+#cat $2 > ${mate_2}
 
 out1=`mktemp -t "XXXXXX_1.fq"`
 out2=`mktemp -t "XXXXXX_2.fq"`
 $bbmapdir/bbmap/bbduk.sh -Xmx32g -Xms32g in1=${mate_1} in2=${mate_2} out1=$out1 out2=$out2 ref=adapters,phix ktrim=r k=23 mink=11 hdist=1 tpe tbo overwrite=true
 
-rm ${out_1} ${out_2}
 out3=`mktemp -t "XXXXXX_3.fq"`
 $bbmapdir/bbmap/dedupe.sh -Xmx32g -Xms32g in1=$out1 in2=$out2 out=$out3 overwrite=true
 
@@ -29,9 +29,7 @@ $bbmapdir/bbmap/reformat.sh in=$out3 out1=$out4 out2=$out5 overwrite=true
 
 rm $out3
 
-
 $bbmapdir/bbmap/bbmerge.sh in1=$out4 in2=$out5 out1=$3 overwrite=true mix=t
-
 
 rm  $out4 $out5 
 
