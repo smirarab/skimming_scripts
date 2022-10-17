@@ -45,4 +45,4 @@ done
 
 cat  ${split}_MERGED_* > $3
 
-rm ${spli}*
+rm ${split}*
