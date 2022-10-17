@@ -3,15 +3,21 @@
 # $1 mate1
 # $2 mate2
 # $3 output
+if [ $# -lt 3 ]; then 
+	echo USAGE: $0 [first fastq(.gz) input] [second fastq(.gz) input] [output filename] ([TMPDIR])
+fi
+
 
 set -e
 set -x 
+
+bbmapdir=/calab_data/mirarab/home/smirarab/workspace
+# To get bbmap:  wget -O bbmap.tar.gz  https://sourceforge.net/projects/bbmap/files/BBMap_38.87.tar.gz/download
 
 dukmem=16
 # Keep the following number a product of 4
 splitsize=20000000
 
-bbmapdir=/calab_data/mirarab/home/smirarab/workspace
 if [ $# -gt 3 ]; then 
 	export TMPDIR=$4
 else
@@ -23,8 +29,8 @@ mate_2=$2 #`mktemp -t "XXXXXX.fq"`
 
 split=`mktemp -t`
 
-split -l ${splitsize} -d ${mate_1} ${split}_R1_
-split -l ${splitsize} -d ${mate_2} ${split}_R2_
+zcat -f ${mate_1} | split -l ${splitsize} -d - ${split}_R1_
+zcat -f ${mate_2} | split -l ${splitsize} -d - ${split}_R2_
 
 for x in `ls ${split}_R1_*`; do 
 	# Adapter removal
@@ -35,14 +41,15 @@ for x in `ls ${split}_R1_*`; do
 	$bbmapdir/bbmap/dedupe.sh -Xmx${dukmem}g -Xms${dukmem}g in1=${x/_R1_/_R1DUK_} in2=${x/_R1_/_R2DUK_} out=${x/_R1_/_OUT_} overwrite=true
 	rm ${x/_R1_/_R1DUK_} ${x/_R1_/_R2DUK_}
 
-	# reformat back 
+	# reformat back (to fastq?)
 	$bbmapdir/bbmap/reformat.sh in=${x/_R1_/_OUT_} out1=${x/_R1_/_OUT1_} out2=${x/_R1_/_OUT2_} overwrite=true
 	rm ${x/_R1_/_OUT_}
 	
+	# merge the two reads
 	$bbmapdir/bbmap/bbmerge.sh in1=${x/_R1_/_OUT1_} in2=${x/_R1_/_OUT2_} out1=${x/_R1_/_MERGED_} overwrite=true mix=t
 	rm ${x/_R1_/_OUT1_} ${x/_R1_/_OUT2_}
 done
 
 cat  ${split}_MERGED_* > $3
 
-rm ${spli}*
+rm ${split} ${split}_MERGED_*
