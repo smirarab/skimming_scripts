@@ -3,8 +3,9 @@
 # $1 mate1
 # $2 mate2
 # $3 output
+
 if [ $# -lt 3 ]; then 
-	echo USAGE: $0 [first fastq(.gz) input] [second fastq(.gz) input] [output filename] ([TMPDIR])
+	echo "USAGE: $0 [first fastq(.gz) input] [second fastq(.gz) input] [output filename] ([TMPDIR])"
 fi
 
 
