@@ -4,32 +4,45 @@
 # $2 mate2
 # $3 output
 
+set -e
+set -x 
+
+dukmem=16
+# Keep the following number a product of 4
+splitsize=20000000
+
 bbmapdir=/calab_data/mirarab/home/smirarab/workspace
-export TMPDIR=.
+if [ $# -gt 3 ]; then 
+	export TMPDIR=$4
+else
+	export TMPDIR=.
+fi
 
 mate_1=$1 #`mktemp -t "XXXXXX.fq"`
 mate_2=$2 #`mktemp -t "XXXXXX.fq"`
 
+split=`mktemp -t`
 
-#cat $1 > ${mate_1}
-#cat $2 > ${mate_2}
+split -l ${splitsize} -d ${mate_1} ${split}_R1_
+split -l ${splitsize} -d ${mate_2} ${split}_R2_
 
-out1=`mktemp -t "XXXXXX_1.fq"`
-out2=`mktemp -t "XXXXXX_2.fq"`
-$bbmapdir/bbmap/bbduk.sh -Xmx32g -Xms32g in1=${mate_1} in2=${mate_2} out1=$out1 out2=$out2 ref=adapters,phix ktrim=r k=23 mink=11 hdist=1 tpe tbo overwrite=true
+for x in `ls ${split}_R1_*`; do 
+	# Adapter removal
+	$bbmapdir/bbmap/bbduk.sh -Xmx${dukmem}g -Xms${dukmem}g in1=$x in2=${x/_R1_/_R2_} out1=${x/_R1_/_R1DUK_} out2=${x/_R1_/_R2DUK_} ref=adapters,phix ktrim=r k=23 mink=11 hdist=1 tpe tbo overwrite=true
+	rm ${x/_R1_/_R2_} $x
 
-out3=`mktemp -t "XXXXXX_3.fq"`
-$bbmapdir/bbmap/dedupe.sh -Xmx32g -Xms32g in1=$out1 in2=$out2 out=$out3 overwrite=true
+	# Deduplicaiton
+	$bbmapdir/bbmap/dedupe.sh -Xmx${dukmem}g -Xms${dukmem}g in1=${x/_R1_/_R1DUK_} in2=${x/_R1_/_R2DUK_} out=${x/_R1_/_OUT_} overwrite=true
+	rm ${x/_R1_/_R1DUK_} ${x/_R1_/_R2DUK_}
 
-rm $out1 $out2
+	# reformat back 
+	$bbmapdir/bbmap/reformat.sh in=${x/_R1_/_OUT_} out1=${x/_R1_/_OUT1_} out2=${x/_R1_/_OUT2_} overwrite=true
+	rm ${x/_R1_/_OUT_}
+	
+	$bbmapdir/bbmap/bbmerge.sh in1=${x/_R1_/_OUT1_} in2=${x/_R1_/_OUT2_} out1=${x/_R1_/_MERGED_} overwrite=true mix=t
+	rm ${x/_R1_/_OUT1_} ${x/_R1_/_OUT2_}
+done
 
-out4=`mktemp -t "XXXXXX_4.fq"`
-out5=`mktemp -t "XXXXXX_5.fq"`
-$bbmapdir/bbmap/reformat.sh in=$out3 out1=$out4 out2=$out5 overwrite=true
+cat  ${split}_MERGED_* > $3
 
-rm $out3
-
-$bbmapdir/bbmap/bbmerge.sh in1=$out4 in2=$out5 out1=$3 overwrite=true mix=t
-
-rm  $out4 $out5 
-
+rm ${spli}*
