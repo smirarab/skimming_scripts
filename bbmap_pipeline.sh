@@ -12,7 +12,9 @@ fi
 set -e
 set -x 
 
-bbmapdir=/calab_data/mirarab/home/smirarab/workspace
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+bbmapdir=$SCRIPT_DIR
 # To get bbmap:  wget -O bbmap.tar.gz  https://sourceforge.net/projects/bbmap/files/BBMap_38.87.tar.gz/download
 
 dukmem=16
