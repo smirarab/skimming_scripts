@@ -17,3 +17,5 @@ skmer -h
 
 * `submit*`: these scripts are used to submit jobs. Others can use them to with minimal changes
 	* For [submit-calab-skmer.sh](submit-calab-skmer.sh), note that it purposefully uses fewer cores than available because of memory issues
+
+* [submit-calab-analyzetrees.sh](submit-calab-analyzetrees.sh): a post skmer script that makes a tree, format files, and makes some figures. 
