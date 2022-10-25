@@ -10,8 +10,10 @@
 #SBATCH --mem=120G
 
 source ${HOME}/.bashrc
-source /calab_data/mirarab/home/smirarab/anaconda3/etc/profile.d/conda.sh
+source ${HOME}/anaconda3/etc/profile.d/conda.sh
 
 conda activate
 
 skmer --debug reference skmerinput -p 2
+## OR
+# skmer --debug query -a [name of fa or fq file] 
