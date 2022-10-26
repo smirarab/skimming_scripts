@@ -30,10 +30,14 @@ fi
 mate_1=$1 #`mktemp -t "XXXXXX.fq"`
 mate_2=$2 #`mktemp -t "XXXXXX.fq"`
 
-split=`mktemp -t`
+if [ $# -gt 4 ]; then
+	split=$5
+else
+	split=`mktemp -t`
 
-zcat -f ${mate_1} | split -l ${splitsize} -d - ${split}_R1_
-zcat -f ${mate_2} | split -l ${splitsize} -d - ${split}_R2_
+	zcat -f ${mate_1} | split -l ${splitsize} -d - ${split}_R1_
+	zcat -f ${mate_2} | split -l ${splitsize} -d - ${split}_R2_
+fi
 
 for x in `ls ${split}_R1_*`; do 
 	# Adapter removal

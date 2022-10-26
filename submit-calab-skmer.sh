@@ -16,4 +16,6 @@ conda activate
 
 skmer --debug reference skmerinput -p 2
 ## OR
-# skmer --debug query -a [name of fa or fq file] 
+# skmer --debug query -a [name of fa or fq file] library
+## followed up by
+# skmer distance -t library
