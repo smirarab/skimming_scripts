@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="Skmer"
+#SBATCH --job-name="postskmer"
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=12
 #SBATCH -o skmer_o_%j
@@ -8,7 +8,8 @@
 #SBATCH -A miragrp
 #SBATCH --export=ALL
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=~/workspace/skimming_scripts/
+#$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 matrix=ref-dist-mat.txt
 outname=$( basename `pwd` )
