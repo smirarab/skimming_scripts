@@ -15,6 +15,8 @@ We have also created micro-pipeline for these tools that perform each of their p
 
 **Pipeline scripts:**
 
+You can find all the pipelines mentioned below [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/Pipelines).
+
 1. **skim_processing_batch_merge.sh**
 
 Usage:``"bash skim_processing_batch_merge.sh -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
