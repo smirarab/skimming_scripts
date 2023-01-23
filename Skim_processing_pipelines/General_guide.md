@@ -17,7 +17,7 @@ We have also created micro-pipeline for these tools that perform each of their p
 
 You can find all the pipelines mentioned below [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/Pipelines).
 
-1. **skim_processing_batch_merge.sh**
+1. [**skim_processing_batch_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_batch_merge.sh)
 
 Usage:``"bash skim_processing_batch_merge.sh -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 
@@ -59,7 +59,7 @@ This pipeline performs the following set of operations (and produces the respect
         *   fig-${out_name}.pdf - phylogenetic tree inferred using FastMe
         *   dist-${out_name}.txt - pairwise distance between all genomes in the library (existing and input)
 
-2. **skim_processing_batch_no_merge.sh**
+2. [**skim_processing_batch_no_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_batch_no_merge.sh)
 
 Usage:``'bash skim_processing_batch_no_merge.sh -h -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 ``Runs nuclear read processing pipeline on a batch of reads (not split into two mates) in reference to a constructed library:``
@@ -83,7 +83,7 @@ In this case, the -x input argument directs to a folder containing reads, with e
 
 Please note that the output directories for bbmap and RESPECT would be ~/skim_processing_batch_no_merge/* , where ~/ is decided by (-a) input argument
 
-3. **skim_processing_single_merge.sh**
+3. [**skim_processing_single_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_single_merge.sh)
 
 Usage:``'bash skim_processing_single_merge.sh -h [-x input_1] [-y input_2] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 ``Runs nuclear read processing pipeline on a single read split into two mates in reference to a constructed library:``
@@ -108,7 +108,7 @@ In this case, the -x and -y input arguments direct to each of the two mates of t
 
 Please note that the output directories for bbmap and RESPECT would be ~/skim_processing_single_merge/* , where ~/ is decided by (-a) input argument
 
-4. **skim_processing_single_no_merge.sh** 
+4. [**skim_processing_single_no_merge.sh** ](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_single_no_merge.sh)
 
 Usage:``'bash skim_processing_single_no_merge.sh -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 ``Runs nuclear read processing pipeline on a single read (not split into two mates) in reference to a constructed library:``
