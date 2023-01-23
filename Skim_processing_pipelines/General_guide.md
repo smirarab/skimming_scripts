@@ -134,6 +134,6 @@ Please note that the output directories for bbmap and RESPECT would be ~/skim_pr
 
 **Installation instructions:**
 
-Refer to the Installation guide to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to run the described pipelines.
+Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Installation_guide.md) to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to run the described pipelines.
 
 
