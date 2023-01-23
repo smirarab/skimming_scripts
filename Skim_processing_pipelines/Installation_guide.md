@@ -2,7 +2,7 @@
 
 **NOTE:** Most of the tools would be installed through the conda distribution within an activated conda environment in the working shell. Whenever you are using any of the pipelines, you should make changes to the `conda_source.sh` script and keep it in the same directory as the scripts.
 
-The `conda_source.sh` script is meant to allow users to edit the name of their conda environment to easily switch between various configurations. A sample conda environment configuration can be seen [here](https://github.com/smirarab/skimming_scripts/blob/master/environment.yml). 
+The `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/conda_source.sh) is meant to allow users to edit the name of their conda environment to easily switch between various configurations. A sample conda environment configuration can be seen [here](https://github.com/smirarab/skimming_scripts/blob/master/environment.yml). 
 
 **Install main tools**
 
