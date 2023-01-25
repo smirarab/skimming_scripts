@@ -4,7 +4,7 @@ Below is a summary of some pipelines that we have designed using various tools t
 
 Before we begin, here's a list of the tools that we have combined in these pipelines. 
 
-**Tools:**
+### Tools:
 
 * [BBTools](https://sourceforge.net/projects/bbmap/) for reads cleanup
 * [Skmer](https://github.com/shahab-sarmashghi/Skmer) for distance calculation between two genome skims
@@ -13,13 +13,18 @@ Before we begin, here's a list of the tools that we have combined in these pipel
 
 We have also created micro-pipeline for these tools that perform each of their proposed operation on a single input (details and links below). Some of these micro-pipelines have been used as supporting operations in the combined pipelines. 
 
+### Installation instructions:**
+
+Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Installation_guide.md) to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to run the described pipelines.
+
+
 **Pipeline scripts:**
 
 You can find all the pipelines mentioned below [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/Pipelines).
 
 1. [**skim_processing_batch_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_batch_merge.sh)
 
-Usage:``"bash skim_processing_batch_merge.sh -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
+Usage: ``bash skim_processing_batch_merge.sh -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 
 ``Runs nuclear read processing pipeline on a batch of reads split into two mates in reference to a constructed library:``
     
@@ -36,6 +41,12 @@ Usage:``"bash skim_processing_batch_merge.sh -h [-x input] [-g lib_dir] [-a out_
     -r  threads for RESPECT; default: 8
     -d  number of iteration cycles for RESPECT, default: 8
     -f  number of cores for SKMER, default: 8"
+
+The inputs are as follows:
+
+* `-x`: a folder containing two files per sample, one per read. 
+
+* `-g`: the path of the reference library. If this path exists, the pipeline will just add to it. If it does not exist, the pipeline will create the library. 
 
 This pipeline performs the following set of operations (and produces the respective output) for each genome mate pair in the batch of files:
 
@@ -61,7 +72,8 @@ This pipeline performs the following set of operations (and produces the respect
 
 2. [**skim_processing_batch_no_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_batch_no_merge.sh)
 
-Usage:``'bash skim_processing_batch_no_merge.sh -h -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
+Usage: ``bash skim_processing_batch_no_merge.sh -h -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
+
 ``Runs nuclear read processing pipeline on a batch of reads (not split into two mates) in reference to a constructed library:``
     
     Options:
@@ -85,7 +97,8 @@ Please note that the output directories for bbmap and RESPECT would be ~/skim_pr
 
 3. [**skim_processing_single_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_single_merge.sh)
 
-Usage:``'bash skim_processing_single_merge.sh -h [-x input_1] [-y input_2] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
+Usage: ``bash skim_processing_single_merge.sh -h [-x input_1] [-y input_2] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
+
 ``Runs nuclear read processing pipeline on a single read split into two mates in reference to a constructed library:``
     
     Options:
@@ -131,9 +144,5 @@ Usage:``'bash skim_processing_single_no_merge.sh -h [-x input] [-g lib_dir] [-a 
 In this case, the -x input argument directs to the single genome read. 
 
 Please note that the output directories for bbmap and RESPECT would be ~/skim_processing_single_no_merge/* , where ~/ is decided by (-a) input argument
-
-**Installation instructions:**
-
-Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Installation_guide.md) to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to run the described pipelines.
 
 
