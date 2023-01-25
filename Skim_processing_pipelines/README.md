@@ -13,12 +13,12 @@ Before we begin, here's a list of the tools that we have combined in these pipel
 
 We have also created micro-pipeline for these tools that perform each of their proposed operation on a single input (details and links below). Some of these micro-pipelines have been used as supporting operations in the combined pipelines. 
 
-### Installation instructions:**
+### Installation instructions:
 
 Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Installation_guide.md) to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to run the described pipelines.
 
 
-**Pipeline scripts:**
+### Pipeline scripts:
 
 You can find all the pipelines mentioned below [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/Pipelines).
 
