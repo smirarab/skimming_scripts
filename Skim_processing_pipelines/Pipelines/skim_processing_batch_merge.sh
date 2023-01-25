@@ -56,7 +56,7 @@ declare -A array
 for f in `ls -d ${input}/*`;do
 
         genome=$(basename -- "$f")
-        genome="${genome%_*}"
+        genome="${genome%.*}"
         
         key=$genome
         value=$f
