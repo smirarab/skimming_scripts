@@ -27,7 +27,7 @@ Runs nuclear read processing pipeline on a batch of reads split into two mates i
     -d  number of iteration cycles for RESPECT, default: 1000
     -f  number of cores for SKMER, default: 8"
 
-while getopts ":hl:x:a::r::d::f::g::" opts 
+while getopts ":hl::x:a::r::d::f::g::" opts 
 do
     case "$opts" in
 	h) echo "$usage"; exit;;
