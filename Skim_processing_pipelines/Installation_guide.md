@@ -7,6 +7,8 @@
 
 The `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/conda_source.sh) is meant to allow users to edit the name of their conda environment to easily switch between various configurations. A sample conda environment configuration can be seen [here](https://github.com/smirarab/skimming_scripts/blob/master/environment.yml). 
 
+**Important note on Gurobi** : To be able to run Gurobi and RESPECT, you will need to create an academic license through this [link](https://www.gurobi.com/documentation/9.1/quickstart_mac/obtaining_a_grb_license.html). It will direct you to create an account and request a free academic license. At the end, it generates a code for you to run with grbgetkey command (ex. grbgetkey 253e22f3-...) that you can run in your terminal. This creates a license file and writes it to a default location (press Enter when it asks if you want to store it to the default location). When Gurobi is run, it looks for the license file in the defualt locations. On the expiration of the license, you will have to repeat the procedure after removing the `gurobi.lic` file from its default location.
+
 **Install main tools**
 
 ```
