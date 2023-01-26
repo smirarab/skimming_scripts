@@ -59,6 +59,7 @@ git clone git@github.com:smirarab/skimming_scripts.git
 
 ###Running the pipeline on sample data
 ###Remember to edit the conda_source.sh file (~/tutorial/skimming_scripts/Skim_processing_pipelines/Pipelines/conda_source.sh) with your env name; tutorial here
+###Keeping all the pipelines in the same directory would be recommended
 bash skimming_scripts/Skim_processing_pipelines/Pipelines/skim_processing_batch.sh -x skimming_scripts/Skim_processing_pipelines/test/skims/
 
 ```
