@@ -189,6 +189,4 @@ cd ${ref_dir}
 zip results-${out_name}.zip tree-${out_name}.tre stats-${out_name}.csv fig-${out_name}.pdf dist-${out_name}.txt
 echo "Post processing ends"
 
-rm tree-${out_name}.tre stats-${out_name}.csv fig-${out_name}.pdf dist-${out_name}.txt ref-dist-jc.phy_fastme_stat.txt 
-
 conda deactivate
