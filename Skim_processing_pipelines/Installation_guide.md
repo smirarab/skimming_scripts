@@ -26,7 +26,7 @@ conda config --add channels https://conda.anaconda.org/gurobi
 conda install skmer
 skmer -h
 
-### These dependencies should ideally be installed along with skmer. 
+### The following tools should ideally be installed along with skmer. 
 ###If not, you can always run this command to install them separately.
 conda install jellyfish seqtk mash gurobi 
 
@@ -41,11 +41,12 @@ wget -O bbmap.tar.gz https://sourceforge.net/projects/bbmap/files/BBMap_39.01.ta
 tar xvfz bbmap.tar.gz
 rm bbmap.tar.gz
 
-### Install FastME (to get backbone trees)
+###FastME has been made available as a part of the repository and you can use it directly when we clone the repository later
+### You can also install FastME (to get backbone trees) separately using the following commands
 wget http://www.atgc-montpellier.fr/download/sources/fastme/fastme-2.1.5.tar.gz
 tar xvfz fastme-2.1.5.tar.gz
-chmod +x fastme-2.1.5/binaries/fastme-2.1.5-osx 
-## Change "osx" at the end if using other platforms (linux or windows).
-./fastme-2.1.5/binaries/fastme-2.1.5-osx -h
+chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64
+## Change "linux64" at the end if using other platforms (linux32 or windows).
+./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
 ```
 
