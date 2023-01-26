@@ -17,7 +17,7 @@ read_1=${ref_dir}/tmp/${genome}.1.0.fastq
 read_2=${ref_dir}/tmp/${genome}.2.0.fastq
 whole_read=${ref_dir}/tmp/whole_read_${genome}.fastq
 
-zcat $f > $whole_read
+zcat $working_input > $whole_read
 
 paste - - - - - - - - < $whole_read \
      | tee >(cut -f 1-4 | tr "\t" "\n" > $read_1) \
