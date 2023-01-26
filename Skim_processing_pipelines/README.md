@@ -43,24 +43,25 @@ Usage: ``bash skim_processing_batch.sh -h [-x input] [-l interleaven_counter] [-
 
 The inputs are as follows:
 
-* `-x`: a folder containing two files per sample, one per read. 
+* `-x`: a folder containing two files in fastq.gz or fq.gz format per sample denoting the two mates of the genome read. A test dataset has been provided in this repo [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/test/skims), which might provide further clarity.
 
-* `-g`: the path of the reference library. If this path exists, the pipeline will just add to it. If it does not exist, the pipeline will create the library. 
+* `-g`: the path of the reference library. This is an optional argument: if this path is provided, the pipeline will just add to it and if it is not provided, the pipeline will create the library in the working directory. 
 
-This pipeline performs the following set of operations (and produces the respective output) for each genome mate pair in the batch of files:
+* `-l`: This optional parameter is default set at 0. You can set it to 1 if the input directory contains one interleaved paired-end file, again in fastq.gz or fq.gz format, per sample instead of two mate files. 
+
+This pipeline performs the following set of operations (and produces the respective output) for each genome sample in the batch of files:
 
 * BBMap operations: 
     * 1) remove adapters, 2) deduplicate reads, and 3) merge paired-end reads
-    * Outputs the cleaned and merged read for each pair; output location is ~/skim_processing_batch_merge/bbmap where ~/ is decided by (-a) input argument
+    * Outputs the cleaned and merged read for each pair; output location is ~/skim_processing_batch/bbmap where ~/ is decided by (-a) input argument (Default being the current working directory)
 * Skmer operations:
     * Augments the reference library by adding the input genome query (saves the *.hist*, *.dat*, and *.msh* files of the query inside the library)
         * The .hist file gives 𝑘-mer frequency histogram
         * The .dat file gives genome length, coverage , sequencing error, and average read length. For genomes, all but genome length are left as NA.
         * The .msh file includes the minimum-hashed version of 𝑘-mer sets produced using Mash. The default size is 100000 (can be changed with -s).
-    * Outputs a text file (*dist-Query.txt*) containing the distance between the input genome query and every query in the reference library; output location is the current working directory
 * RESPECT operations:
     *   Characterises the input genome by computing its k-mer repeat spectra; for larger sized genomes, we downsample the sample to an appropriate level (corresponding to a coverage of ~3x) before running RESPECT
-    *   Outputs two tab-separated tables files called *estimated-parameters.txt* and *estimated-spectra.txt* for each genome; output location is ~/skim_processing_batch_merge/respect where ~/ is decided by (-a) input argument
+    *   Outputs two tab-separated tables files called *estimated-parameters.txt* and *estimated-spectra.txt* for each genome; output location is ~/skim_processing_batch/respect where ~/ is decided by (-a) input argument (Default being the current working directory)
 *   Post-processing operations:
     *   Infers the phylogenetic tree and pairwaise distance of the input batch of genomes against the reference set (from the *library*)
     *   Outputs a zipped folder containing the following files to the current working directory:
@@ -69,27 +70,36 @@ This pipeline performs the following set of operations (and produces the respect
         *   fig-${out_name}.pdf - phylogenetic tree inferred using FastMe
         *   dist-${out_name}.txt - pairwise distance between all genomes in the library (existing and input)
 
-2. [**skim_processing_batch_interleaved.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_batch_interleaved.sh)
+2. [**skim_processing_single.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_single.sh)
 
-Usage: ``bash skim_processing_batch_interleaved.sh -h -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
+Usage: ``bash skim_processing_single.sh -h [-x input_1] [-y input_2] [-l interleaven_counter] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 
-``Runs nuclear read processing pipeline on a batch of reads (not split into two mates) in reference to a constructed library:``
+``Runs nuclear read processing pipeline on a single sample split into two mates in reference to a constructed library:``
     
     Options:
     -h  show this help text
-
+   
     Mandatory inputs:
-    -x  path to folder containing reads (reads not to be merged)
-    -g  path to reference library
-
+    -x  path to mate read 1 of genome (becomes the path to the single interleaved paired-end read when -l is set to 1)
+    -y  path to mate read 2 of genome (becomes redundant when -l is set to 1)
+    
     Optional inputs:
+    -l  can be set as 0(default) or 1, input 1 if the input consists of single interleaved paired-end read instead of two mate pair reads
+    -g  path to reference library
     -a  path to output directory for bbmap and respect outputs; default: current working directory
     -r  threads for RESPECT; default: 8
-    -d  number of iteration cycles for RESPECT, default: 8
+    -d  number of iteration cycles for RESPECT, default: 1000
     -f  number of cores for SKMER, default: 8'
+    
+The inputs are as follows:
+
+* `-x`: path to the first mate file in fastq.gz or fq.gz format for the genome sample. if -l is set to 1, this argument is the path to the single interleaved paired-end file for the genome sample.
+
+* `-y`: path to the second mate file in fastq.gz or fq.gz format for the genome sample. if -l is set to 1, this argument becomes redundant.
+
+* `-g`: the path of the reference library. This is an optional argument: if this path is provided, the pipeline will just add to it and if it is not provided, the pipeline will create the library in the working directory. 
+
+* `-l`: This optional parameter is default set at 0. You can set it to 1 if there is a single interleaved paired-end file in fastq.gz or fq.gz format, per sample instead of two mate files.
 
 **NOTE:** This pipeline performs the same set of operations (and produces the respective output) as described under **skim_processing_batch_merge.sh**. However, you should use this pipeline if the original set of genomes are not divided into two mates and therefore. **do not have to be merged** using BBMap toolkit. 
 
-In this case, the -x input argument directs to a folder containing reads, with each read corresponding to an individual genome instead of a pair of reads corresponding to one.
-
-Please note that the output directories for bbmap and RESPECT would be ~/skim_processing_batch_interleaved/* , where ~/ is decided by (-a) input argument
