@@ -157,7 +157,7 @@ for key in "${!array[@]}"; do
         	echo "Coverage not in range, sample to be downsampled by ${ratio_val}"
         	seqtk sample ${out_dir}/${direc_name}/bbmap/${genome}_merged.fq $ratio_val> ${out_dir}/${direc_name}/respect/${genome}/downsampled_${genome}_${ratio_val}.fq
         	echo "Running respect on downsampled sample"
-        	respect -i ${out_dir}/${direc_name}/respect/${genome}/downsampled_${genome}_${ratio_val}.fq -N ${iterations} --debug --tmp ${out_dir}/${direc_name}/respect/${genome}/tmp -o ${out_dir}/${direc_name}/respect/${genome}/output || true
+        	respect -i ${out_dir}/${direc_name}/respect/${genome}/downsampled_${genome}_${ratio_val}.fq -N ${iterations} --debug --threads ${threads} --tmp ${out_dir}/${direc_name}/respect/${genome}/tmp -o ${out_dir}/${direc_name}/respect/${genome}/output || true
         	echo "Respect done"       
 
 	fi
