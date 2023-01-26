@@ -1,6 +1,8 @@
 # Installation guide for Genome Skim processing pipelines
 
-**NOTE:** Most of the tools would be installed through the conda distribution within an activated conda environment in the working shell. Whenever you are using any of the pipelines, you should make changes to the `conda_source.sh` script and keep it in the same directory as the scripts.
+**NOTE:** Most of the tools would be installed through the conda distribution within an activated conda environment in the working shell. 
+
+* Whenever you are using any of the pipelines, make sure that you change the env name in the `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/conda_source.sh). Refer to `CONDAENV=GSkim` in the script where `GSkim` should be changed to your environment's name corresponding to all the tool installations.
 
 The `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/conda_source.sh) is meant to allow users to edit the name of their conda environment to easily switch between various configurations. A sample conda environment configuration can be seen [here](https://github.com/smirarab/skimming_scripts/blob/master/environment.yml). 
 
