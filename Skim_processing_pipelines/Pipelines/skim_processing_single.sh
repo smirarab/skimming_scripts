@@ -11,7 +11,7 @@ cores=8
 interleaven_counter=0
 
 usage="bash ${BASH_SOURCE[0]} -h [-x input_1] [-y input_2] [-l interleaven_counter] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]
-Runs nuclear read processing pipeline on a batch of reads split into two mates in reference to a constructed library:
+Runs nuclear read processing pipeline on a single read split into two mates (or as a interleaved paired-end read) in reference to a constructed library:
     
     Options:
     -h  show this help text
