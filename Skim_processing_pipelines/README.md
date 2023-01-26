@@ -11,35 +11,34 @@ Before we begin, here's a list of the tools that we have combined in these pipel
 * [RESPECT](https://github.com/shahab-sarmashghi/RESPECT) for accurate repeat/coverage estimates
 * [FastMe](http://www.atgc-montpellier.fr/fastme/) for phylogenetic inference using distances
 
-We have also created micro-pipeline for these tools that perform each of their proposed operation on a single input (details and links below). Some of these micro-pipelines have been used as supporting operations in the combined pipelines. 
+We have also created micro-pipeline for some of these tools that perform their respective operation on a single input. These micro-pipelines (details can be found [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/Pipelines)) have been used as supporting operations in the combined pipelines. 
 
 ### Installation instructions:
 
 Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Installation_guide.md) to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to run the described pipelines.
 
-
 ### Pipeline scripts:
 
 You can find all the pipelines mentioned below [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/Pipelines).
 
-1. [**skim_processing_batch_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_batch_merge.sh)
+1. [**skim_processing_batch.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_batch.sh)
 
-Usage: ``bash skim_processing_batch_merge.sh -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
+Usage: ``bash skim_processing_batch.sh -h [-x input] [-l interleaven_counter] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 
 ``Runs nuclear read processing pipeline on a batch of reads split into two mates in reference to a constructed library:``
     
     Options:
     -h  show this help text
-
+   
     Mandatory inputs:
-    -x  path to folder containing reads (split reads to be merged)
-    -g  path to reference library
-
+    -x  path to folder containing reads (split reads that need to be merged)
+    
     Optional inputs:
-    -a  path to output directory for bbmap and respect outputs; 
-    default: current working directory
+    -l  can be set as 0(default) or 1, input 1 if the input directory consists of single interleaved paired-end reads instead of two mate pair reads
+    -g  path to reference library
+    -a  path to output directory for bbmap and respect outputs; default: current working directory
     -r  threads for RESPECT; default: 8
-    -d  number of iteration cycles for RESPECT, default: 8
+    -d  number of iteration cycles for RESPECT, default: 1000
     -f  number of cores for SKMER, default: 8"
 
 The inputs are as follows:
@@ -94,55 +93,3 @@ Usage: ``bash skim_processing_batch_interleaved.sh -h -h [-x input] [-g lib_dir]
 In this case, the -x input argument directs to a folder containing reads, with each read corresponding to an individual genome instead of a pair of reads corresponding to one.
 
 Please note that the output directories for bbmap and RESPECT would be ~/skim_processing_batch_interleaved/* , where ~/ is decided by (-a) input argument
-
-3. [**skim_processing_single_merge.sh**](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_single_merge.sh)
-
-Usage: ``bash skim_processing_single_merge.sh -h [-x input_1] [-y input_2] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
-
-``Runs nuclear read processing pipeline on a single read split into two mates in reference to a constructed library:``
-    
-    Options:
-    -h  show this help text
-
-    Mandatory inputs:
-    -x  mate 1 of read
-    -y  mate 2 of read
-    -g  path to reference library
-
-    Optional inputs:
-    -a  path to output directory for bbmap and respect outputs; default: current working directory
-    -r  threads for RESPECT; default: 8
-    -d  number of iteration cycles for RESPECT, default: 8
-    -f  number of cores for SKMER, default: 8'
-    
-**NOTE:** This pipeline performs the same set of operations (and produces the respective output) as described under **skim_processing_batch_merge.sh**. However, you should use this pipeline for a single genome divided into its two mates to be merged. 
-
-In this case, the -x and -y input arguments direct to each of the two mates of the genome. 
-
-Please note that the output directories for bbmap and RESPECT would be ~/skim_processing_single_merge/* , where ~/ is decided by (-a) input argument
-
-4. [**skim_processing_single_interleaved.sh** ](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/skim_processing_single_interleaved.sh)
-
-Usage:``'bash skim_processing_single_interleaved.sh -h [-x input] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
-``Runs nuclear read processing pipeline on a single read (not split into two mates) in reference to a constructed library:``
-    
-    Options:
-    -h  show this help text
-
-    Mandatory inputs:
-    -x  read to be processed
-    -g  path to reference library
-
-    Optional inputs:
-    -a  path to output directory; default: current working directory
-    -r  threads for RESPECT; default: 8
-    -d  number of iteration cycles for RESPECT, default: 8
-    -f  number of cores for SKMER, default: 8'
-    
-**NOTE:** This pipeline performs the same set of operations (and produces the respective output) as described under **skim_processing_batch_merge.sh**. However, you should use this pipeline for a single genome which does not need to be merged. 
-
-In this case, the -x input argument directs to the single genome read. 
-
-Please note that the output directories for bbmap and RESPECT would be ~/skim_processing_single_interleaved/* , where ~/ is decided by (-a) input argument
-
-
