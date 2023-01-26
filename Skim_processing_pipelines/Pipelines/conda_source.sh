@@ -1,5 +1,5 @@
 #!/bin/bash
 
 eval "$(conda shell.bash hook)"
-CONDAENV=GSkim4
+CONDAENV=GSkim
 conda activate $CONDAENV
