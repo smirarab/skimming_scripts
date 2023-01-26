@@ -43,7 +43,7 @@ Usage: ``bash skim_processing_batch.sh -h [-x input] [-l interleaven_counter] [-
 
 The inputs are as follows:
 
-* `-x`: a folder containing two files in fastq.gz or fq.gz format per sample denoting the two mates of the genome read. A test dataset has been provided in this repo [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/test/skims), which might provide further clarity.
+* `-x`: a folder containing two files in fastq.gz or fq.gz format per sample denoting the two mates of the genome read. A test dataset has been provided in this repo [here](https://github.com/smirarab/skimming_scripts/tree/master/Skim_processing_pipelines/test/skims), which might provide further clarity. **Note**: please ensure that your input directory contains only the fast.gz files before running the pipeline - any temporary files or different file formats would throw an error in this version.
 
 * `-g`: the path of the reference library. This is an optional argument: if this path is provided, the pipeline will just add to it and if it is not provided, the pipeline will create the library in the working directory. 
 
