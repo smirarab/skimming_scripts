@@ -38,6 +38,7 @@ cd RESPECT
 python setup.py install
 cd ..
 
+###BBMap has been made available as a part of the repository and you can use it directly when we clone the repository later
 ### To download BBMap
 wget -O bbmap.tar.gz https://sourceforge.net/projects/bbmap/files/BBMap_39.01.tar.gz/download
 tar xvfz bbmap.tar.gz
@@ -50,5 +51,8 @@ tar xvfz fastme-2.1.5.tar.gz
 chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64
 ## Change "linux64" at the end if using other platforms (linux32 or windows).
 ./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
+
+###Cloning the repository will require you to setup your public SSH key. If you have not done so, you can follow the steps mentioned [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+
 ```
 
