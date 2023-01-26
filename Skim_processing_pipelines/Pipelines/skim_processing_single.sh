@@ -11,14 +11,14 @@ cores=8
 interleaven_counter=0
 
 usage="bash ${BASH_SOURCE[0]} -h [-x input_1] [-y input_2] [-l interleaven_counter] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]
-Runs nuclear read processing pipeline on a single sample split into two mates in reference to a constructed library:
+Runs nuclear read processing pipeline on a batch of reads split into two mates in reference to a constructed library:
     
     Options:
     -h  show this help text
    
     Mandatory inputs:
     -x  path to mate read 1 of genome (becomes the path to the single interleaved paired-end read when -l is set to 1)
-    -y  path to mate read 2 of genome (becomes redundant when -l is set to 1)
+    -y  path to mate read 2 of genome (becomes redundant and not considered when -l is set to 1)
 
     Optional inputs:
     -l  can be set as 0(default) or 1, input 1 if the input consists of single interleaved paired-end read instead of two mate pair reads
@@ -28,7 +28,7 @@ Runs nuclear read processing pipeline on a single sample split into two mates in
     -d  number of iteration cycles for RESPECT, default: 1000
     -f  number of cores for SKMER, default: 8"
 
-while getopts ":hl:x:y:a::r::d::f::g::" opts 
+while getopts ":hl::x:y:a::r::d::f::g::" opts 
 do
     case "$opts" in
 	h) echo "$usage"; exit;;
@@ -45,9 +45,20 @@ do
 done
 
 if [ "1" -eq "$interleaven_counter" ]; then
+	
 	if [ ! "$input_1" ]; then
   		echo "argument -x must be provided"; exit 1
-	else
+	fi
+
+	if [ "$input_2" ]; then
+		echo "Wrong input, check usage"
+		echo "$usage"
+		exit
+	fi
+fi
+
+if [ "0" -eq "$interleaven_counter" ]; then
+	if [ ! "$input_1" ] || [ ! "$input_2" ]; then
 		echo "arguments -x and -y must be provided"; exit 1
 	fi	
 fi
@@ -110,7 +121,7 @@ if [ "1" -eq "$interleaven_counter" ]; then
 	genome="${genome%?}"
 
         echo "BBMap cleanup pipeline starts"
-        ${SCRIPT_DIR}/interleaved_bbmap_pipeline.sh ${input_1} ${input_2} ${out_dir}/${direc_name}/bbmap/${genome}_merged.fq
+        ${SCRIPT_DIR}/interleaved_bbmap_pipeline.sh ${ref_dir}/tmp/${input_1} ${ref_dir}/tmp/${input_2} ${out_dir}/${direc_name}/bbmap/${genome}_merged.fq
         echo "BBMap cleanup pipeline ends"
 
 	rm -r ${ref_dir}/tmp
@@ -168,7 +179,7 @@ else
         echo "Coverage not in range, sample to be downsampled by ${ratio_val}"
         seqtk sample ${out_dir}/${direc_name}/bbmap/${genome}_merged.fq $ratio_val> ${out_dir}/${direc_name}/respect/${genome}/downsampled_${genome}_${ratio_val}.fq
         echo "Running respect on downsampled sample"
-        respect -i ${out_dir}/${direc_name}/respect/${genome}/downsampled_${genome}_${ratio_val}.fq -N ${iterations} --debug --tmp ${out_dir}/${direc_name}/respect/${genome}/tmp -o ${out_dir}/${direc_name}/respect/${genome}/output || true
+        respect -i ${out_dir}/${direc_name}/respect/${genome}/downsampled_${genome}_${ratio_val}.fq -N ${iterations} --threads ${threads} --debug --tmp ${out_dir}/${direc_name}/respect/${genome}/tmp -o ${out_dir}/${direc_name}/respect/${genome}/output || true
         echo "Respect done"       
 
 fi
@@ -197,7 +208,5 @@ cd ${ref_dir}
 
 zip results-${out_name}.zip tree-${out_name}.tre stats-${out_name}.csv fig-${out_name}.pdf dist-${out_name}.txt
 echo "Post processing ends"
-
-rm tree-${out_name}.tre stats-${out_name}.csv fig-${out_name}.pdf dist-${out_name}.txt ref-dist-jc.phy_fastme_stat.txt 
 
 conda deactivate
