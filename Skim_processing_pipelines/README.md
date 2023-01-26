@@ -74,14 +74,14 @@ This pipeline performs the following set of operations (and produces the respect
 
 Usage: ``bash skim_processing_single.sh -h [-x input_1] [-y input_2] [-l interleaven_counter] [-g lib_dir] [-a out_dir] [-r threads] [-d iterations] [-f cores]``
 
-``Runs nuclear read processing pipeline on a single sample split into two mates in reference to a constructed library:``
+``Runs nuclear read processing pipeline on a single read split into two mates (or as a interleaved paired-end read) in reference to a constructed library:``
     
     Options:
     -h  show this help text
    
     Mandatory inputs:
     -x  path to mate read 1 of genome (becomes the path to the single interleaved paired-end read when -l is set to 1)
-    -y  path to mate read 2 of genome (becomes redundant when -l is set to 1)
+    -y  path to mate read 2 of genome (becomes redundant and not considered when -l is set to 1)
     
     Optional inputs:
     -l  can be set as 0(default) or 1, input 1 if the input consists of single interleaved paired-end read instead of two mate pair reads
@@ -93,9 +93,9 @@ Usage: ``bash skim_processing_single.sh -h [-x input_1] [-y input_2] [-l interle
     
 The inputs are as follows:
 
-* `-x`: path to the first mate file in fastq.gz or fq.gz format for the genome sample. if -l is set to 1, this argument is the path to the single interleaved paired-end file for the genome sample.
+* `-x`: path to the first mate file in fastq.gz or fq.gz format for the genome sample. If -l is set to 1, this argument is the path to the single interleaved paired-end file for the genome sample.
 
-* `-y`: path to the second mate file in fastq.gz or fq.gz format for the genome sample. if -l is set to 1, this argument becomes redundant.
+* `-y`: path to the second mate file in fastq.gz or fq.gz format for the genome sample. If -l is set to 1, this argument becomes redundant and you should not be passing it as an input.
 
 * `-g`: the path of the reference library. This is an optional argument: if this path is provided, the pipeline will just add to it and if it is not provided, the pipeline will create the library in the working directory. 
 
