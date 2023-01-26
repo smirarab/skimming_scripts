@@ -1,6 +1,6 @@
 # Installation guide for Genome Skim processing pipelines
 
-**NOTE:** Most of the tools would be installed through the conda distribution within an activated conda environment in the working shell. 
+**Important Note on Conda:** Most of the tools would be installed through the conda distribution within an activated conda environment in the working shell. 
 
 * Whenever you are using any of the pipelines, make sure that you change the env name in the `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/conda_source.sh). Refer to `CONDAENV=GSkim` in the script where `GSkim` should be changed to your environment's name corresponding to all the tool installations.
 * In the example below, we would change the `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/conda_source.sh) to say `CONDAENV=tutorial`
@@ -8,6 +8,8 @@
 The `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/Skim_processing_pipelines/Pipelines/conda_source.sh) is meant to allow users to edit the name of their conda environment to easily switch between various configurations. A sample conda environment configuration can be seen [here](https://github.com/smirarab/skimming_scripts/blob/master/environment.yml). 
 
 **Important note on Gurobi** : To be able to run Gurobi and RESPECT, you will need to create an academic license through this [link](https://www.gurobi.com/documentation/9.1/quickstart_mac/obtaining_a_grb_license.html). It will direct you to create an account and request a free academic license. At the end, it generates a code for you to run with grbgetkey command (ex. grbgetkey 253e22f3-...) that you can run in your terminal. This creates a license file and writes it to a default location (press Enter when it asks if you want to store it to the default location). When Gurobi is run, it looks for the license file in the defualt locations. On the expiration of the license, you will have to repeat the procedure after removing the `gurobi.lic` file from its default location.
+
+**Important note on Git** : To be able to clone the repository, you will need to setup your public SSH key on your Github profile. If not done, you can follow the steps [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) under "Generating a new SSH key" and then, following the steps [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) under "Adding a new SSH key to your account".
 
 **Install main tools**
 
@@ -25,7 +27,7 @@ conda config --add channels conda-forge
 conda config --add channels https://conda.anaconda.org/gurobi
 
 ### Instal Skmer
-conda install skmer
+conda install skmer==3.2.1
 skmer -h
 
 ### The following tools should ideally be installed along with skmer. 
@@ -52,7 +54,12 @@ chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64
 ## Change "linux64" at the end if using other platforms (linux32 or windows).
 ./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
 
-###Cloning the repository will require you to setup your public SSH key. If you have not done so, you can follow the steps mentioned [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+###Cloning the repository 
+git clone git@github.com:smirarab/skimming_scripts.git
+
+###Running the pipeline on sample data
+###Remember to edit the conda_source.sh file (~/tutorial/skimming_scripts/Skim_processing_pipelines/Pipelines/conda_source.sh) with your env name; tutorial here
+bash skimming_scripts/Skim_processing_pipelines/Pipelines/skim_processing_batch.sh -x skimming_scripts/Skim_processing_pipelines/test/skims/
 
 ```
 
