@@ -28,17 +28,17 @@ tar xvfz fastme-2.1.5.tar.gz
 chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64 ## Change "linux64" at the end if using other platforms (osx or windows).
 ./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
 ```
-
+<!-- 
 ## Scripts
 
 * [bbmap_pipeline.sh](bbmap_pipeline.sh): takes as input two fastq files (for paired reads), splits them, removes the adapters, deduplicates, and merges
 	* You can provide `TMPDIR` as 4th parameter. 
-	* The input can be .gz files
-
+	* The input can be .gz files -->
+<!-- 
 * `submit*`: these scripts are used to submit jobs. Others can use them to with minimal changes
-	* For [submit-calab-skmer.sh](submit-calab-skmer.sh), note that it purposefully uses fewer cores than available because of memory issues
+	* For [submit-calab-skmer.sh](submit-calab-skmer.sh), note that it purposefully uses fewer cores than available because of memory issues -->
 
-* [submit-calab-analyzetrees.sh](submit-calab-analyzetrees.sh): a post skmer script that makes a tree, format files, and makes some figures. 
+<!-- * [submit-calab-analyzetrees.sh](submit-calab-analyzetrees.sh): a post skmer script that makes a tree, format files, and makes some figures.  -->
 
 ## Tutorials
 
