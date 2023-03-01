@@ -19,8 +19,6 @@ Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/b
 
 ### Pipeline scripts:
 
-You can find the pipeline mentioned below [here](https://github.com/smirarab/skimming_scripts).
-
 1. [**skims_processing_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/skims_processing_pipeline.sh)
 
 Usage: ``bash skims_processing_pipeline.sh -h [-x input] [-l interleaven_counter] [-g lib_dir] [-r threads] [-d iterations] [-f cores]``
