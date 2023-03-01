@@ -11,7 +11,7 @@ Before we begin, here's a list of the tools that we have combined in these pipel
 * [RESPECT](https://github.com/shahab-sarmashghi/RESPECT) for accurate repeat/coverage estimates
 * [FastMe](http://www.atgc-montpellier.fr/fastme/) for phylogenetic inference using distances
 
-We have also created micro-pipeline for some of these tools that perform their respective operation on a single input. These micro-pipelines (found [here](https://github.com/smirarab/skimming_scripts)) have been used as supporting operations in the integrated pipeline. A brief summary about these auxilliary pipelines has also been provided below.
+We have also created micro-pipelines for some of these tools that perform their respective operation on a single input. These micro-pipelines (found [here](https://github.com/smirarab/skimming_scripts)) have been used as supporting operations in the integrated pipeline. A brief summary about these auxilliary pipelines has also been provided below.
 
 ### Installation instructions:
 
