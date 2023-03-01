@@ -44,7 +44,7 @@ The inputs are as follows:
 
 * `-g`: the path of the reference library. This is an optional argument: if this path is provided, the pipeline will just add to it and if it is not provided, the pipeline will create the library in the working directory. 
 
-* `-l`: This optional parameter is default set at 0. You should set it to 1 [by adding `-l 1` to the CL input for this pipeline] if the input directory contains one interleaved file per sample in fastq.gz/fq.gz/fastq/fq format. 
+* `-l`: This optional parameter is default set at 0. You should set it to 1 [by adding `-l 1` to the command line input for this pipeline] if the input directory contains one interleaved file per sample in fastq.gz/fq.gz/fastq/fq format. 
 
 This pipeline performs the following set of operations (and produces the respective output) for each genome sample in the batch of files:
 
