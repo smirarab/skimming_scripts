@@ -32,7 +32,10 @@ skmer -h
 
 ### The following tools should ideally be installed along with skmer. 
 ###If not, you can always run this command to install them separately.
-conda install jellyfish seqtk mash gurobi 
+conda install jellyfish seqtk mash 
+
+###Run this command to install gurobi solver for respect
+conda install gurobi 
 
 ### Install RESPECT
 git clone https://github.com/shahab-sarmashghi/RESPECT.git
