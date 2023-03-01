@@ -116,9 +116,9 @@ This pipeline performs the following set of operations (and produces the respect
         *   fig-${out_name}.pdf - phylogenetic tree inferred using FastMe
         *   dist-${out_name}.txt - pairwise distance between all genomes in the library (existing and input)
 
-**NOTE**: The pipeline creates a log file (named as `log_file.txt`) in the directory containing the scripts. This log file tracks the various input files that have been processed using this pipeline as well as the specific operations conducted on those input files by appending the following string to the text file:
+**NOTE**: The pipeline creates a log file (named as `log_file.txt`) in the directory containing the scripts. This log file tracks the various input files that have been processed using this pipeline as well as the specific operations conducted on those input files by appending the following string to the text file: `<genome_name><IABC>`
 
-`<genome_name><IABC>`; where each letter means the successful completion of a particular operation on the input file corresponding to that genome. The nomenclature for the letters is as follows:
+; where each letter means the successful completion of a particular operation on the input file corresponding to that genome. The nomenclature for the letters is as follows:
 
 * I -> Split the interleaved file into two paired fastq files per sample (if `-l` is set to 1)
 * A -> BBMap operation (Cleaning and merging the two reads per sample)
