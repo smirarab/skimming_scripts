@@ -81,12 +81,37 @@ where each letter means the successful completion of a particular operation on t
 
 **Deleting or moving the file would force the pipeline to repeat operations performed earlier on the same input files, thus compromising with the speed and efficiency of the entire process. Therefore, it is advised not to make changes to this file.**
 
-Here on, we discuss the auxilliary scripts.
+Here on, we discuss the auxilliary scripts used in the integrated pipeline.
 
-2. [**bbmap_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/bbmap_pipeline.sh): takes as input two fastq files (for paired reads), splits them, removes the adapters, deduplicates, and merges
+2. [**bbmap_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/bbmap_pipeline.sh): Takes as input two fastq/fastq.gz files (for paired reads), splits them, removes the adapters, deduplicates, and merges them.
 	* You can provide `TMPDIR` as 4th parameter. 
-	* The input can be .gz files -->
 
+3. [**conda_source.sh**](https://github.com/smirarab/skimming_scripts/blob/master/conda_source.sh): Allows the user to switch between different environment configurations with the essential tools installed to run this pipeline. Refer to `CONDAENV=GSkim4` in the script where GSkim4 should be changed to your environment's name before running the pipeline.
+
+4. [**interleaved_bbmap_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/interleaved_bbmap_pipeline.sh): Takes as input two fastq/fastq.gz files (for paired reads) which have been obtained by splitting an interleaved (fastq/fastq.gz) file for a genome sample. The script then splits them, removes the adapters, deduplicates, and merges them.
+	* You can provide `TMPDIR` as 4th parameter. 
+
+5. [**interleaven.sh**](https://github.com/smirarab/skimming_scripts/blob/master/interleaven.sh): Takes as input a directory of interleaved (fastq/fastq.gz) files and splits each of them into a batch of two fastq files for each interleaved file present in the original directory. The output location is ~/interleaven_reads, where ~/ is the current working directory
+
+6. [**jc-correction.sh**](https://github.com/smirarab/skimming_scripts/blob/master/jc-correction.sh): Takes as input the dist-matrix txt file produced by `skmer distance` and applies the Jukes-Cantor correction on the data contained in the input file. 
+
+7. [**post_processing_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/post_processing_pipeline.sh): Takes as input the dist-matrix txt file produced by `skmer distance` as well as the *library* directory built from skim samples, and outputs a zipped folder with contents as described under '**Post-processing operations**' for **skims_processing_pipeline.sh**.
+
+8. [**respect_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/respect_pipeline.sh): Takes as an input the merged and cleaned fastq file for the genome skim sample and produces the output as described under '**RESPECT operations**' for **skims_processing_pipeline.sh**.
+
+9. [**skmer_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/skmer_pipeline.sh): Takes as an input the merged and cleaned fastq file for the genome skim sample and produces the output as described under '**Skmer operations**' for **skims_processing_pipeline.sh**.
+
+10. [**tsv_to_phymat.sh**](https://github.com/smirarab/skimming_scripts/blob/master/tsv_to_phymat.sh): Takes as an input the Jukes-Cantor corrected dist-matrix file (outputted by **jc-correction.sh**) and converts the dataframe into a format suitable for fastme operations.
+
+##Additional folders
+
+1. [**bbmap**](https://github.com/smirarab/skimming_scripts/tree/master/bbmap): contains the scripts used by **bbmap_pipeline.sh** pipeline for cleaning and merging operations on a pair of fastq/fastq.gz files. You can download it from the source repository (instructions provided in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) or simply clone this repository to use them.
+
+2. [**fastme-2.1.5**](https://github.com/smirarab/skimming_scripts/tree/master/fastme-2.1.5): contains the FastME scripts used by **post_processing_pipeline.sh** pipeline to infers the phylogenetic tree and pairwaise distances between the query samples. You can download it from the source repository (instructions provided in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) or simply clone this repository to use them.
+
+3. [**Obsolete**](https://github.com/smirarab/skimming_scripts/tree/master/Obsolete): contains additional scripts developed earlier, that are not required for the working of the newer version of the pipeline.
+
+4. [**test/skims**](https://github.com/smirarab/skimming_scripts/tree/master/test/skims): contains the test dataset of yeast genomes based skim samples, that can be used to test the working of this pipeline.
 
 <!-- 
 ## Installations
