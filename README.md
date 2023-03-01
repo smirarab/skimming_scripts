@@ -101,7 +101,7 @@ Here on, we discuss the auxilliary scripts used in the integrated pipeline.
 
 10. [**tsv_to_phymat.sh**](https://github.com/smirarab/skimming_scripts/blob/master/tsv_to_phymat.sh): Takes as an input the Jukes-Cantor corrected dist-matrix file (outputted by **jc-correction.sh**) and converts the dataframe into a format suitable for fastme operations.
 
-##Additional folders
+## Additional folders
 
 1. [**bbmap**](https://github.com/smirarab/skimming_scripts/tree/master/bbmap): contains the scripts used by **bbmap_pipeline.sh** pipeline for cleaning and merging operations on a pair of fastq/fastq.gz files. You can download it from the source repository (instructions provided in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) or simply clone this repository to use them.
 
