@@ -44,7 +44,7 @@ python setup.py install
 cd ..
 
 ### BBMap has been made available as a part of the repository and you can use it directly when we clone the repository later
-### You cna always run the code below to download BBMap separately, if you want to
+### You can always run the code below to download BBMap separately, if you want to
 ### wget -O bbmap.tar.gz https://sourceforge.net/projects/bbmap/files/BBMap_39.01.tar.gz/download
 ### tar xvfz bbmap.tar.gz
 ### rm bbmap.tar.gz
