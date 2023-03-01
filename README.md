@@ -89,7 +89,7 @@ Here on, we discuss the auxilliary scripts used in the integrated pipeline.
 4. [**interleaved_bbmap_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/interleaved_bbmap_pipeline.sh): Takes as input two fastq/fastq.gz files (for paired reads) which have been obtained by splitting an interleaved (fastq/fastq.gz) file for a genome sample. The script then splits them, removes the adapters, deduplicates, and merges them.
 	* You can provide `TMPDIR` as 4th parameter. 
 
-5. [**interleaven.sh**](https://github.com/smirarab/skimming_scripts/blob/master/interleaven.sh): Takes as input a directory of interleaved (fastq/fastq.gz) files and splits each of them into a batch of two fastq files for each interleaved file present in the original directory. The output location is ~/interleaven_reads, where ~/ is the current working directory
+5. [**interleaven.sh**](https://github.com/smirarab/skimming_scripts/blob/master/interleaven.sh): Takes as input a directory of interleaved (fastq/fastq.gz) files and splits each of them into two fastq files for each interleaved file present in the original directory. The output location is ~/interleaven_reads, where ~/ is the current working directory
 
 6. [**jc-correction.sh**](https://github.com/smirarab/skimming_scripts/blob/master/jc-correction.sh): Takes as input the dist-matrix txt file produced by `skmer distance` and applies the Jukes-Cantor correction on the data contained in the input file. 
 
