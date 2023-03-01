@@ -107,7 +107,7 @@ This pipeline performs the following set of operations (and produces the respect
 * RESPECT operations:
     *   Characterises the input genome by computing its k-mer repeat spectra; for larger sized genomes, we downsample the sample to an appropriate level (corresponding to a coverage of ~3x) before running RESPECT
     *   Outputs two tab-separated tables files called *estimated-parameters.txt* and *estimated-spectra.txt* for each genome; output location is ~/skims_processing_pipeline/respect/output where ~/ is the current working directory
-    *   Outputs temp files created by Respect during its operations, which contain the parameter estimates during all the iteration cycles of the analysis; output location is ~/skims_processing_pipeline/respect/output/tmp where ~/ is the current working directory 
+    *   Outputs tmp files created by Respect during its operations, which contain the parameter estimates during all the iteration cycles of the analysis; output location is ~/skims_processing_pipeline/respect/output/tmp where ~/ is the current working directory 
 *   Post-processing operations:
     *   Infers the phylogenetic tree and pairwaise distance of the input batch of genomes against the reference set (from the *library*)
     *   Outputs a zipped folder containing the following files to the current working directory:
