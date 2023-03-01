@@ -29,7 +29,6 @@ chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64 ## Change "linux64" at the e
 ./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
 ```
 
-
 ## Scripts
 
 * [bbmap_pipeline.sh](bbmap_pipeline.sh): takes as input two fastq files (for paired reads), splits them, removes the adapters, deduplicates, and merges
@@ -45,7 +44,7 @@ chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64 ## Change "linux64" at the e
 
 See https://github.com/smirarab/tutorials/blob/master/skimming-tutorials.md
 
-# General guide on Genome Skim processing pipelines 
+## General guide on Genome Skim processing pipelines 
 
 Below is a summary of some pipelines that we have designed using various tools that have been developed recently for the assembly-free analysis of all genomic information from genome skims including the nuclear reads. Using these pipelines, you can generate relevant information about genome characteristics (such as repeat spectra, length, and coverage) and phylogenetic characterisation (with or without a reference tree), which can be very useful for downstream applications.
 
