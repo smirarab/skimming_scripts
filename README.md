@@ -105,7 +105,7 @@ Here on, we discuss the auxilliary scripts used in the integrated pipeline.
 
 1. [**bbmap**](https://github.com/smirarab/skimming_scripts/tree/master/bbmap): contains the scripts used by **bbmap_pipeline.sh** pipeline for cleaning and merging operations on a pair of fastq/fastq.gz files. You can download it from the source repository (instructions provided in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) or simply clone this repository to use them.
 
-2. [**fastme-2.1.5**](https://github.com/smirarab/skimming_scripts/tree/master/fastme-2.1.5): contains the FastME scripts used by **post_processing_pipeline.sh** pipeline to infers the phylogenetic tree and pairwaise distances between the query samples. You can download it from the source repository (instructions provided in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) or simply clone this repository to use them.
+2. [**fastme-2.1.5**](https://github.com/smirarab/skimming_scripts/tree/master/fastme-2.1.5): contains the FastME scripts used by **post_processing_pipeline.sh** pipeline to infer the phylogenetic tree and pairwaise distances between the query samples. You can download it from the source repository (instructions provided in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) or simply clone this repository to use them.
 
 3. [**Obsolete**](https://github.com/smirarab/skimming_scripts/tree/master/Obsolete): contains additional scripts developed earlier, that are not required for the working of the newer version of the pipeline.
 
