@@ -6,7 +6,8 @@
 conda env create -f environment.yml
 ~~~
 
-2. RESPECT
+2. RESPECT (also covered in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) 
+
 ~~~bash
 pushd ..
 git clone https://github.com/shahab-sarmashghi/RESPECT.git
