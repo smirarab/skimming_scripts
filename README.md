@@ -1,49 +1,3 @@
-## Installations
-
-1. Install conda env:
-
-~~~bash
-conda env create -f environment.yml
-~~~
-
-2. RESPECT (also covered in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) 
-
-~~~bash
-pushd ..
-git clone https://github.com/shahab-sarmashghi/RESPECT.git
-cd RESPECT/
-python setup.py install
-popd
-~~~
-
-3. Newick utilities (not necessary):
-
-Download and install fromm https://anaconda.org/bioconda/newick_utils/1.6/download/linux-64/newick_utils-1.6-hec16e2b_5.tar.bz2
-
-4. Note: FastME is already made available but can also be downloaded directly
-
-```bash
-wget http://www.atgc-montpellier.fr/download/sources/fastme/fastme-2.1.5.tar.gz
-tar xvfz fastme-2.1.5.tar.gz
-chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64 ## Change "linux64" at the end if using other platforms (osx or windows).
-./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
-```
-<!-- 
-## Scripts
-
-* [bbmap_pipeline.sh](bbmap_pipeline.sh): takes as input two fastq files (for paired reads), splits them, removes the adapters, deduplicates, and merges
-	* You can provide `TMPDIR` as 4th parameter. 
-	* The input can be .gz files -->
-<!-- 
-* `submit*`: these scripts are used to submit jobs. Others can use them to with minimal changes
-	* For [submit-calab-skmer.sh](submit-calab-skmer.sh), note that it purposefully uses fewer cores than available because of memory issues -->
-
-<!-- * [submit-calab-analyzetrees.sh](submit-calab-analyzetrees.sh): a post skmer script that makes a tree, format files, and makes some figures.  -->
-
-## Tutorials
-
-See https://github.com/smirarab/tutorials/blob/master/skimming-tutorials.md
-
 ## General guide on Genome Skim processing pipelines 
 
 Here, we have summarised the skim processing pipeline that we have designed using various tools that have been developed recently for the assembly-free analysis of all genomic information from genome skims including the nuclear reads. Using this pipeline, you can generate relevant information about genome characteristics (such as repeat spectra, length, and coverage) and phylogenetic characterisation (with or without a reference tree), which can be very useful for downstream applications.
@@ -57,7 +11,7 @@ Before we begin, here's a list of the tools that we have combined in these pipel
 * [RESPECT](https://github.com/shahab-sarmashghi/RESPECT) for accurate repeat/coverage estimates
 * [FastMe](http://www.atgc-montpellier.fr/fastme/) for phylogenetic inference using distances
 
-We have also created micro-pipeline for some of these tools that perform their respective operation on a single input. These micro-pipelines (found [here](https://github.com/smirarab/skimming_scripts)) have been used as supporting operations in the integrated pipeline. 
+We have also created micro-pipeline for some of these tools that perform their respective operation on a single input. These micro-pipelines (found [here](https://github.com/smirarab/skimming_scripts)) have been used as supporting operations in the integrated pipeline. A brief summary about these auxilliary pipelines has also been provided below.
 
 ### Installation instructions:
 
@@ -126,3 +80,58 @@ where each letter means the successful completion of a particular operation on t
 * C -> Respect operation (Characterising the genome skim)
 
 **Deleting or moving the file would force the pipeline to repeat operations performed earlier on the same input files, thus compromising with the speed and efficiency of the entire process. Therefore, it is advised not to make changes to this file.**
+
+Here on, we discuss the auxilliary scripts.
+
+2. [**bbmap_pipeline.sh**](https://github.com/smirarab/skimming_scripts/blob/master/bbmap_pipeline.sh): takes as input two fastq files (for paired reads), splits them, removes the adapters, deduplicates, and merges
+	* You can provide `TMPDIR` as 4th parameter. 
+	* The input can be .gz files -->
+
+
+<!-- 
+## Installations
+
+1. Install conda env:
+
+~~~bash
+conda env create -f environment.yml
+~~~
+
+2. RESPECT (also covered in the [installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md)) 
+
+~~~bash
+pushd ..
+git clone https://github.com/shahab-sarmashghi/RESPECT.git
+cd RESPECT/
+python setup.py install
+popd
+~~~
+
+3. Newick utilities (not necessary):
+
+Download and install fromm https://anaconda.org/bioconda/newick_utils/1.6/download/linux-64/newick_utils-1.6-hec16e2b_5.tar.bz2
+
+4. Note: FastME is already made available but can also be downloaded directly
+
+```bash
+wget http://www.atgc-montpellier.fr/download/sources/fastme/fastme-2.1.5.tar.gz
+tar xvfz fastme-2.1.5.tar.gz
+chmod +x fastme-2.1.5/binaries/fastme-2.1.5-linux64 ## Change "linux64" at the end if using other platforms (osx or windows).
+./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
+```
+<!-- 
+<!-- 
+## Scripts
+
+* [bbmap_pipeline.sh](bbmap_pipeline.sh): takes as input two fastq files (for paired reads), splits them, removes the adapters, deduplicates, and merges
+	* You can provide `TMPDIR` as 4th parameter. 
+	* The input can be .gz files -->
+<!-- 
+* `submit*`: these scripts are used to submit jobs. Others can use them to with minimal changes
+	* For [submit-calab-skmer.sh](submit-calab-skmer.sh), note that it purposefully uses fewer cores than available because of memory issues -->
+
+<!-- * [submit-calab-analyzetrees.sh](submit-calab-analyzetrees.sh): a post skmer script that makes a tree, format files, and makes some figures.  -->
+
+## Tutorials
+
+See https://github.com/smirarab/tutorials/blob/master/skimming-tutorials.md
