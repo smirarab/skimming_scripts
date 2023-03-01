@@ -88,7 +88,7 @@ Usage: ``bash skims_processing_pipeline.sh -h [-x input] [-l interleaven_counter
 
 The inputs are as follows:
 
-* `-x`: a folder containing two files (or a single interleaved file) in fastq.gz/fq.gz/fastq/fq format per sample denoting the two mates of the genome read. A test dataset has been provided in this repo [here](https://github.com/smirarab/skimming_scripts/tree/master/test/skims).
+* `-x`: a folder containing two files (or a single interleaved file) in fastq.gz/fq.gz/fastq/fq format per sample denoting the two mates of the genome read. A test dataset has been provided in this repo [here](https://github.com/smirarab/skimming_scripts/tree/master/test/skims). **Please provide the absolute path to the input directory here, even if it is contained in the working directory.** 
 
 * `-g`: the path of the reference library. This is an optional argument: if this path is provided, the pipeline will just add to it and if it is not provided, the pipeline will create the library in the working directory. 
 
