@@ -15,7 +15,7 @@ We have also created micro-pipelines for some of these tools that perform their 
 
 ### Installation instructions:
 
-Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md) to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to run the described pipelines.
+Refer to the [Installation guide](https://github.com/smirarab/skimming_scripts/blob/master/Installation_guide.md) to understand how to install the main tools as well as other dependencies (including micro-pipelines) that would be required to perform the described operations.
 
 ### Pipeline scripts:
 
