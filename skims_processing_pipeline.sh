@@ -152,7 +152,7 @@ for key in "${!array[@]}"; do
 	if [ -f "${out_dir}/${direc_name}/bbmap/${genome}_merged.fq" ]; then
 
 		test_var=0
-		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "A"` || true
+		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "A$" -e "AB$" -e "ABC$"` || true
 		if [ "1" -eq "$test_var" ]; then
 			counter=1
 		else
@@ -197,7 +197,7 @@ for key in "${!array[@]}"; do
         if [ -d "${lib_dir}/${genome}_merged" ]; then
 
                 test_var=0
-		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "B"` || true
+		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "B$" -e "BC$"` || true
                 if [ "1" -eq "$test_var" ]; then
                         counter=1
                 else
@@ -231,7 +231,7 @@ for key in "${!array[@]}"; do
 	if [ -d "${out_dir}/${direc_name}/respect/${genome}" ]; then
 
                 test_var=0
-		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "C"` || true
+		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "C$"` || true
                 if [ "1" -eq "$test_var" ]; then
                         counter=1
                 else
