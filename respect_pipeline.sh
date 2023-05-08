@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -x
-set -e
-
 cov_val=$1
 genome=$2
 lib_dir=$3
