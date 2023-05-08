@@ -97,23 +97,27 @@ declare -A array
 
 counter=0
 
-for f in `ls ${input}`;do
+for f in `ls ${input}`; do
 
         genome=$(basename -- "$f")
         extension="${genome##*.}"
 	if [ "$extension" = "gz" ]; then
 		genome="${genome%.*}"
 		extension="${genome##*.}"
-		if [ "$extension" = "fastq" ] || [ "$extension" = "fq" ]; then
+		if [ "$extension" = "fastq" ] || [ "$extension" = "fq" ] || [ "$extension" = "fna" ] || [ "$extension" = "fa" ]; then
 			genome="${genome%.*}"
-        		genome="${genome%?}"
+        		if [ "$extension" = "fastq" ] || [ "$extension" = "fq" ]; then
+				genome="${genome%?}"
+			fi
 			key=$genome
 			counter=1
 		fi
-	elif [ "$extension" = "fastq" ] || [ "$extension" = "fq" ]; then
+	elif [ "$extension" = "fastq" ] || [ "$extension" = "fq" ] || [ "$extension" = "fna" ] || [ "$extension" = "fa" ]; then
 		genome="${genome%.*}"
-                genome="${genome%?}"
-                key=$genome
+                if [ "$extension" = "fastq" ] || [ "$extension" = "fq" ]; then
+			genome="${genome%?}"
+		fi
+		key=$genome
 		counter=1
 	fi
 
@@ -126,7 +130,7 @@ for f in `ls ${input}`;do
 done
 
 direc_name=$(basename "${BASH_SOURCE[0]%.*}") 
-mkdir -p ${out_dir}/${direc_name}/{bbmap,respect}
+mkdir -p ${out_dir}/${direc_name}/{bbmap,assemblies,consult,kraken,respect}
 
 if [ -d "${out_dir}/temp_ops" ]; then
 
@@ -139,17 +143,34 @@ source ${SCRIPT_DIR}/conda_source.sh
 
 for key in "${!array[@]}"; do
 	
+	assembly_counter=0	
 	genome=$key
         genome_value=${array[$key]}
-        input_1="${genome_value%,*}"
-        input_2="${genome_value#*,}"
+
+	input_1="${genome_value%,*}"
+        extension_1="${input_1##*.}"
+        
+	if [ "$extension_1" = "gz" ]; then
+                temp="${input_1%.*}"
+                extension_2="${temp##*.}"
+                if [ "$extension_2" = "fna" ] || [ "$extension_2" = "fa" ]; then
+			assembly_counter=1
+			zcat $input/$input_1 | cat > ${out_dir}/${direc_name}/assemblies/${genome}.fna
+                fi
+	elif [ "$extension_1" = "fna" ] || [ "$extension_1" = "fa" ]; then
+		assembly_counter=1
+	fi
 	
+	if [ "0" -eq "$assembly_counter" ]; then
+		input_2="${genome_value#*,}"
+	fi
+
 	mkdir -p ${out_dir}/temp_ops
 	cd ${out_dir}/temp_ops
 
 	counter=0
 
-	if [ -f "${out_dir}/${direc_name}/bbmap/${genome}_merged.fq" ]; then
+	if [ -f "${out_dir}/${direc_name}/bbmap/${genome}_merged.fq" ] && [ "0" -eq "$assembly_counter" ]; then
 
 		test_var=0
 		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "A"` || true
@@ -162,7 +183,7 @@ for key in "${!array[@]}"; do
 
 	extension="${input_1##*.}"
 
-	if [ "0" -eq "$counter" ]; then
+	if [ "0" -eq "$counter" ] && [ "0" -eq "$assembly_counter" ]; then
 		echo "BBMap cleanup pipeline starts"
 		if [ "$extension" = "gz" ]; then
 			${SCRIPT_DIR}/bbmap_pipeline.sh ${input}/${input_1} ${input}/${input_2} ${out_dir}/${direc_name}/bbmap/${genome}_merged.fq
@@ -187,6 +208,74 @@ for key in "${!array[@]}"; do
  	cd ${ref_dir}
 	rm -r ${out_dir}/temp_ops
 	
+        cd ${SCRIPT_DIR}/CONSULT-II
+
+        counter=0
+
+        if [ -f "${out_dir}/${direc_name}/consult/unclassified-seq_${genome}_merged" ] && [ "0" -eq "$assembly_counter" ]; then
+
+                test_var=0
+                test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "D"` || true
+                if [ "1" -eq "$test_var" ]; then
+                        counter=1
+                else
+                        rm ${out_dir}/${direc_name}/consult/unclassified-seq_${genome}_merged
+                fi
+        fi
+
+        if [ "0" -eq "$counter" ] && [ "0" -eq "$assembly_counter" ]; then
+              
+		echo "CONSULT-II decontamination step starts"
+                ./consult_search --unclassified-out -i all_nbrhood_kmers_k32_p3l2clmn7_K15-map2-171_ToL/ -q ${out_dir}/${direc_name}/bbmap/${genome}_merged.fq -o ${out_dir}/${direc_name}/consult/
+                echo "CONSULT-II decontamination step ends"
+             	
+                var=`grep "$genome" $SCRIPT_DIR/log_file.txt`
+                if [ "1" -eq "$interleaven_counter" ]; then
+                        var1="$genome""IAD"
+                        sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
+                else
+                        var1="$genome""AD"
+                        sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
+                fi
+
+        else
+                echo "CONSULT-II decontamination step on this sample already performed"
+        fi
+
+        cd ${SCRIPT_DIR}/kraken2
+	
+	counter=0
+
+        if [ -f "${out_dir}/${direc_name}/kraken/unclassified-kra_${genome}.fq" ] && [ "0" -eq "$assembly_counter" ]; then
+
+                test_var=0
+                test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "E"` || true
+                if [ "1" -eq "$test_var" ]; then
+                        counter=1
+                else
+                        rm ${out_dir}/${direc_name}/kraken/unclassified-kra_${genome}.fq
+                fi
+        fi
+
+        if [ "0" -eq "$counter" ] && [ "0" -eq "$assembly_counter" ]; then
+
+                echo "Kraken2 decontamination step starts"
+                ./kraken2 --db krakenlib/ ${out_dir}/${direc_name}/consult/unclassified-seq_${genome}_merged --unclassified-out ${out_dir}/${direc_name}/kraken/unclassified-kra_${genome}.fq
+                echo "Kraken2 decontamination step ends"
+
+                var=`grep "$genome" $SCRIPT_DIR/log_file.txt`
+                if [ "1" -eq "$interleaven_counter" ]; then
+                        var1="$genome""IADE"
+                        sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
+                else
+                        var1="$genome""ADE"
+                        sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
+                fi
+
+        else
+                echo "Kraken2 decontamination step on this sample already performed"
+        fi
+
 	f=`ls ${lib_dir} | wc -l`
 
 	mkdir -p ${out_dir}/temp_ops
@@ -194,27 +283,39 @@ for key in "${!array[@]}"; do
 
 	counter=0
 
-        if [ -d "${lib_dir}/${genome}_merged" ]; then
+        if [ -d "${lib_dir}/unclassified-kra_${genome}" ] || [ -d "${lib_dir}/${genome}"  ]; then
 
                 test_var=0
 		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "B"` || true
                 if [ "1" -eq "$test_var" ]; then
                         counter=1
                 else
-                        rm -r ${lib_dir}/${genome}_merged
+                        rm -r ${lib_dir}/unclassified-kra_${genome} || true
+			rm -r ${lib_dir}/${genome} || true
                 fi
         fi
 
 	if [ "0" -eq "$counter" ]; then
 		
-		${SCRIPT_DIR}/skmer_pipeline.sh $f ${out_dir}/${direc_name}/bbmap ${genome}_merged.fq $lib_dir $cores
+		if [ "0" -eq "$assembly_counter" ]; then
+			${SCRIPT_DIR}/skmer_pipeline.sh $f ${out_dir}/${direc_name}/kraken unclassified-kra_${genome}.fq $lib_dir $cores
+		else
+			if [ "$extension_1" = "gz" ]; then
+				${SCRIPT_DIR}/skmer_pipeline.sh $f ${out_dir}/${direc_name}/assemblies ${genome}.fna $lib_dir $cores
+			else
+				${SCRIPT_DIR}/skmer_pipeline.sh $f ${input} ${input_1} $lib_dir $cores
+			fi
+		fi
 
-		var=`grep "$genome" $SCRIPT_DIR/log_file.txt`
         	if [ "1" -eq "$interleaven_counter" ]; then
-                	var1="$genome""IAB"
+			var=`grep "$genome" $SCRIPT_DIR/log_file.txt`
+                	var1="$genome""IADEB"
                 	sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
-        	else
-                	var1="$genome""AB"
+		elif [ "1" -eq "$assembly_counter" ]; then
+			echo "$genome""B">>$SCRIPT_DIR/log_file.txt
+		else
+			var=`grep "$genome" $SCRIPT_DIR/log_file.txt`
+                	var1="$genome""ADEB"
                 	sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
         	fi
 	else
@@ -223,8 +324,12 @@ for key in "${!array[@]}"; do
 
 	cd ${ref_dir}
         rm -r ${out_dir}/temp_ops
-
-	cov_val=$(grep coverage ${lib_dir}/${genome}_merged/${genome}_merged.dat |cut -f2)
+	
+	if [ -d "${lib_dir}/unclassified-kra_${genome}" ]; then	
+		cov_val=$(grep coverage ${lib_dir}/unclassified-kra_${genome}/unclassified-kra_${genome}.dat |cut -f2)
+	else
+		cov_val=0
+	fi
 	
 	counter=0
 
@@ -242,15 +347,26 @@ for key in "${!array[@]}"; do
 	mkdir -p ${out_dir}/${direc_name}/respect/${genome}/output/tmp
 
 	if [ "0" -eq "$counter" ]; then
-	
-		${SCRIPT_DIR}/respect_pipeline.sh $cov_val $genome $lib_dir ${out_dir}/${direc_name} $iterations $threads
+		
+		if [ "0" -eq "$assembly_counter" ]; then
+                	${SCRIPT_DIR}/respect_pipeline.sh $cov_val $genome $lib_dir ${out_dir}/${direc_name} $iterations $threads $assembly_counter $extension_1 ${out_dir}/${direc_name}
+		else
+                        if [ "$extension_1" = "gz" ]; then
+				${SCRIPT_DIR}/respect_pipeline.sh $cov_val $genome $lib_dir ${out_dir}/${direc_name} $iterations $threads $assembly_counter $extension_1 ${out_dir}/${direc_name}
+                        else
+				${SCRIPT_DIR}/respect_pipeline.sh $cov_val $genome $lib_dir ${input} $iterations $threads $assembly_counter $extension_1 ${out_dir}/${direc_name}
+                        fi
+                fi
 		
 		var=`grep "$genome" $SCRIPT_DIR/log_file.txt`
         	if [ "1" -eq "$interleaven_counter" ]; then
-                	var1="$genome""IABC"
+                	var1="$genome""IADEBC"
                 	sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
-        	else
-                	var1="$genome""ABC"
+		elif [ "1" -eq "$assembly_counter" ]; then
+			var1="$genome""BC"
+                        sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
+		else
+                	var1="$genome""ADEBC"
                 	sed -i "s/$var/$var1/" $SCRIPT_DIR/log_file.txt
         	fi
 	else
@@ -261,12 +377,12 @@ done
 
 echo "Skmer distance running"
 skmer distance ${lib_dir}
-echo "Skmer distance done"
+echo "Skmer distance complete"
 
 echo "Post processing starts" 
 
 ${SCRIPT_DIR}/post_processing_pipeline.sh ${SCRIPT_DIR} ${ref_dir} ${direc_name} ${lib_dir}
 
-echo "Post processing done" 
+echo "Post processing complete" 
 
 conda deactivate
