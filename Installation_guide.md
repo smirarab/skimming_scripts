@@ -2,7 +2,7 @@
 
 **Important Note on Conda:** Most of the tools would be installed through the conda distribution within an activated conda environment in the working shell. 
 
-* Whenever you are using any of the pipelines, make sure that you change the env name in the `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/conda_source.sh). Refer to `CONDAENV=GSkim` in the script where `GSkim` should be changed to your environment's name corresponding to all the tool installations.
+* Whenever you are using any of the pipelines, make sure that you change the env name in the `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/conda_source.sh). Refer to `CONDAENV=GSkim4` in the script where `GSkim4` should be changed to your environment's name corresponding to all the tool installations.
 * In the example below, we would change the `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/conda_source.sh) to say `CONDAENV=tutorial`
 
 The `conda_source.sh` [script](https://github.com/smirarab/skimming_scripts/blob/master/conda_source.sh) is meant to allow users to edit the name of their conda environment to easily switch between various configurations. A sample conda environment configuration can be seen [here](https://github.com/smirarab/skimming_scripts/blob/master/Obsolete/environment.yml). 
@@ -32,7 +32,10 @@ skmer -h
 
 ### The following tools should ideally be installed along with skmer. 
 ###If not, you can always run this command to install them separately.
-conda install jellyfish seqtk mash gurobi 
+conda install jellyfish seqtk mash 
+
+###Run this command to install gurobi solver for respect
+conda install gurobi 
 
 ### Install RESPECT
 git clone https://github.com/shahab-sarmashghi/RESPECT.git
@@ -41,7 +44,7 @@ python setup.py install
 cd ..
 
 ### BBMap has been made available as a part of the repository and you can use it directly when we clone the repository later
-### You cna always run the code below to download BBMap separately, if you want to
+### You can always run the code below to download BBMap separately, if you want to
 ### wget -O bbmap.tar.gz https://sourceforge.net/projects/bbmap/files/BBMap_39.01.tar.gz/download
 ### tar xvfz bbmap.tar.gz
 ### rm bbmap.tar.gz
@@ -58,9 +61,11 @@ cd ..
 git clone git@github.com:smirarab/skimming_scripts.git
 
 ###Running the pipeline on sample data
-###Remember to edit the conda_source.sh file (~/tutorial/skimming_scripts/Skim_processing_pipelines/Pipelines/conda_source.sh) with your env name; tutorial here
+###Remember to edit the conda_source.sh file (~/tutorial/skimming_scripts/conda_source.sh) with your env name; tutorial here
 ###Keeping all the pipelines in the same directory would be recommended
-bash skimming_scripts/Skim_processing_pipelines/Pipelines/skim_processing_batch.sh -x skimming_scripts/Skim_processing_pipelines/test/skims/
+cd skimming_scripts/test
+var=`pwd`
+bash ../skims_processing_pipeline.sh -x $var/skims
 
 ```
 
