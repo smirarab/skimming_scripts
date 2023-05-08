@@ -29,7 +29,7 @@ for f in ./*; do
         	    if [ -f "${ref_dir}/interleaven_reads/${genome}.1.fastq" ] || [ -f "${ref_dir}/interleaven_reads/${genome}.2.fastq" ] || [ -f "${ref_dir}/interleaven_reads/whole_read_${genome}.fastq" ]; then
 
                 	test_var=0
-			test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "I"` || true
+			test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "I$" -e "IA$" -e "IAD$" -e "IADE$" -e "IADEB$" -e "IADEBC$"` || true
                 	if [ "1" -eq "$test_var" ]; then
                         	counter=1
                 	else
@@ -76,7 +76,7 @@ for f in ./*; do
              if [ -f "${ref_dir}/interleaven_reads/${genome}.1.fastq" ] || [ -f "${ref_dir}/interleaven_reads/${genome}.2.fastq" ]; then
 
                         test_var=0
-		        test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "I"` || true
+		        test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "I$" -e "IA$" -e "IAD$" -e "IADE$" -e "IADEB$" -e "IADEBC$"` || true
                         if [ "1" -eq "$test_var" ]; then
                                 counter=1
                         else

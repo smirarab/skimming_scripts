@@ -173,7 +173,7 @@ for key in "${!array[@]}"; do
 	if [ -f "${out_dir}/${direc_name}/bbmap/${genome}_merged.fq" ] && [ "0" -eq "$assembly_counter" ]; then
 
 		test_var=0
-		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "A$" -e "AB$" -e "ABC$"` || true
+		test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "A$" -e "AD$" -e "ADE$" -e "ADEB$" -e "ADEBC$"` || true
 		if [ "1" -eq "$test_var" ]; then
 			counter=1
 		else
@@ -215,7 +215,7 @@ for key in "${!array[@]}"; do
         if [ -f "${out_dir}/${direc_name}/consult/unclassified-seq_${genome}_merged" ] && [ "0" -eq "$assembly_counter" ]; then
 
                 test_var=0
-                test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "D"` || true
+                test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "D$" -e "DE$" -e "DEB$" -e "DEBC$"` || true
                 if [ "1" -eq "$test_var" ]; then
                         counter=1
                 else
@@ -249,7 +249,7 @@ for key in "${!array[@]}"; do
         if [ -f "${out_dir}/${direc_name}/kraken/unclassified-kra_${genome}.fq" ] && [ "0" -eq "$assembly_counter" ]; then
 
                 test_var=0
-                test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c "E"` || true
+                test_var=`grep "$genome" $SCRIPT_DIR/log_file.txt | grep -c -e "E$" -e "EB$" -e "EBC$"` || true
                 if [ "1" -eq "$test_var" ]; then
                         counter=1
                 else
