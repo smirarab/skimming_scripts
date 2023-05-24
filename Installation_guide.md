@@ -59,6 +59,7 @@ cd ..
 
 ### Cloning the repository 
 git clone git@github.com:smirarab/skimming_scripts.git
+cd skimming_scripts
 
 ### Installing CONSULT-II
 git clone https://github.com/bo1929/CONSULT-II
@@ -72,12 +73,19 @@ for f in `ls ./`; do d=${f##*_}; mv $f $d; done
 cd ../..
 
 ### Installing kraken2
-
+git clone https://github.com/DerrickWood/kraken2
+cd kraken2/
+./install_kraken2.sh ./
+### Installing relevant library for human contaminant removal using kraken2
+./kraken2-build --download-taxonomy --db krakenlib
+./kraken2-build --download-library human --db krakenlib/
+./kraken2-build --build --db krakenlib/
+cd ..
 
 ###Running the pipeline on sample data
 ###Remember to edit the conda_source.sh file (~/tutorial/skimming_scripts/conda_source.sh) with your env name; tutorial here
 ###Keeping all the pipelines in the same directory would be recommended
-cd skimming_scripts/test
+cd test
 var=`pwd`
 bash ../skims_processing_pipeline.sh -x $var/skims
 
