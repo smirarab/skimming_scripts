@@ -31,10 +31,10 @@ conda install skmer==3.2.1
 skmer -h
 
 ### The following tools should ideally be installed along with skmer. 
-###If not, you can always run this command to install them separately.
+### If not, you can always run this command to install them separately.
 conda install jellyfish seqtk mash 
 
-###Run this command to install gurobi solver for respect
+### Run this command to install gurobi solver for respect
 conda install gurobi 
 
 ### Install RESPECT
@@ -57,8 +57,22 @@ cd ..
 ### Change "linux64" at the end if using other platforms (linux32 or windows).
 ### ./fastme-2.1.5/binaries/fastme-2.1.5-linux64 -h
 
-###Cloning the repository 
+### Cloning the repository 
 git clone git@github.com:smirarab/skimming_scripts.git
+
+### Installing CONSULT-II
+git clone https://github.com/bo1929/CONSULT-II
+cd CONSULT-II/
+make all
+### Installing relevant library for bacterial/archeal contaminant removal using CONSULT-II 
+wget https://ter-trees.ucsd.edu/data/consult/v1.0.0/all_nbrhood_kmers_k32_p3l2clmn7_K15-map2-171_ToL.tar.gz
+tar -xvf all_nbrhood_kmers_k32_p3l2clmn7_K15-map2-171_ToL.tar.gz 
+cd all_nbrhood_kmers_k32_p3l2clmn7_K15-map2-171_ToL
+for f in `ls ./`; do d=${f##*_}; mv $f $d; done
+cd ../..
+
+### Installing kraken2
+
 
 ###Running the pipeline on sample data
 ###Remember to edit the conda_source.sh file (~/tutorial/skimming_scripts/conda_source.sh) with your env name; tutorial here
